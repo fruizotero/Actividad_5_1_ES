@@ -16,4 +16,20 @@ require_once "conexion.php";
          echo $ex->getMessage();
      }
  }
+
+ function getUsers()
+ {
+
+     try {
+         $conn = getConnection();
+         $query = "SELECT * FROM notas.usuario;";
+         $stmt = $conn->prepare($query);
+         $stmt->execute();
+         $values = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+         return $values;
+     } catch (PDOException $ex) {
+         echo $ex->getMessage();
+     }
+ }
 ?>

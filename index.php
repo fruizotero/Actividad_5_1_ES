@@ -19,6 +19,7 @@
     $password = null;
     $confirm_password = null;
     $role = null;
+    $is_valid = true;
 
 
 
@@ -30,11 +31,28 @@
         $confirm_password = $_POST["confirm_password"];
         $role = $_POST["role"];
 
-        if(strcmp($password, $confirm_password)==0){
+        if (strcmp($password, $confirm_password) == 0) {
             echo "son validas";
-        } else{
+        } else {
             echo "no son validas";
+            $is_valid = false;
         }
+        
+        $users = getUsers();
+
+        
+        foreach ($users as  $user) {
+            $email_bd = $user["email"];
+
+            if (strcmp($email, $email_bd) == 0) {
+                echo "Email ya usado, intenta con otro email";
+                break;
+            } 
+
+        
+           
+        }
+
 
         echo "<pre>";
         print_r($_POST);
@@ -69,6 +87,7 @@
 
                             <?php
                             $roles = getRoles();
+                           
 
                             foreach ($roles as  $role) {
                                 $id = $role["id"];
