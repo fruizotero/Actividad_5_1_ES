@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,40 +8,88 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
+
 <body>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2>Registro de Usuario</h2>
-            <form action="process_form.php" method="post">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirm_password">Repita contraseña</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                </div>
-                <div class="form-group">
-                    <label for="role">Seleccione el rol:</label>
-                    <select class="form-control" id="role" name="role" required>
-                        <option value="1">Admin</option>
-                        <option value="2">user</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar usuario</button>
-            </form>
+    <?php
+
+    require_once "./scripts/funciones.php";
+
+    $email = null;
+    $password = null;
+    $confirm_password = null;
+    $role = null;
+
+
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $confirm_password = $_POST["confirm_password"];
+        $role = $_POST["role"];
+
+        if(strcmp($password, $confirm_password)==0){
+            echo "son validas";
+        } else{
+            echo "no son validas";
+        }
+
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
+    }
+
+
+
+
+    ?>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Registro de Usuario</h2>
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Repita contraseña</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Seleccione el rol:</label>
+                        <select class="form-control" id="role" name="role" required>
+
+                            <?php
+                            $roles = getRoles();
+
+                            foreach ($roles as  $role) {
+                                $id = $role["id"];
+                                $name = $role["name"];
+                                echo "<option values value=$id>$name</option>";
+                            }
+
+                            ?>
+
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar usuario</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap JS and jQuery (required for Bootstrap) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS and jQuery (required for Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
