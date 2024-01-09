@@ -73,7 +73,7 @@ function register_user($email, $pass, $role)
 
         $stmt_add_role = $conn->prepare($query_add_role);
         // $stmt_add_role->debugDumpParams();
-      
+
         $success = $success && $stmt_add_role->execute(["idUsuario" => $idUsuario, "idRol" => $role]);
         // $stmt_add_role->debugDumpParams();
 
@@ -89,4 +89,37 @@ function register_user($email, $pass, $role)
     }
 
     return $success;
+}
+
+
+function login_user($email, $pass)
+{
+
+    $resp = ["succes" => false, "errors" => []];
+
+    try {
+
+        $conn = getConnection();
+
+        if (!exist_user_email($email)) {
+            $resp["errors"][] = "Email no válido";
+            return $resp;
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+
+    return $resp;
+}
+
+function check_email($email)
+{
+}
+
+function check_pass($pass)
+{
+}
+
+function user_roles($id_user)
+{
 }

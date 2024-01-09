@@ -10,6 +10,12 @@
 <body>
 
 <div class="container mt-5">
+<div class="row justify-content-end">
+            <div class="col-2">
+                <a href="../index.php" >Registro</a>
+
+            </div>
+        </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2>User Login</h2>
