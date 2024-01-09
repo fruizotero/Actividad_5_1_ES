@@ -19,7 +19,8 @@
     $password = null;
     $confirm_password = null;
     $role = null;
-    $is_valid = true;
+    $is_form_valid = true;
+    $errors = [];
 
 
 
@@ -31,27 +32,32 @@
         $confirm_password = $_POST["confirm_password"];
         $role = $_POST["role"];
 
-        if (strcmp($password, $confirm_password) == 0) {
-            echo "son validas";
-        } else {
-            echo "no son validas";
-            $is_valid = false;
+        if (strcasecmp($password, $confirm_password) == 0) {
+            $errors[] = "Contraseñas no válidas";
+            $is_form_valid = false;
         }
-        
-        $users = getUsers();
 
-        
-        foreach ($users as  $user) {
-            $email_bd = $user["email"];
-
-            if (strcmp($email, $email_bd) == 0) {
-                echo "Email ya usado, intenta con otro email";
-                break;
-            } 
-
-        
-           
+        if (exist_user_email($email)) {
+            $errors[] = "Email ya registrado";
+            $is_form_valid = false;
         }
+
+        foreach ($errors as $value) {
+            # code...
+            echo $value . "<br>";
+        }
+
+        // $users = getUsers();
+
+
+        // foreach ($users as  $user) {
+        //     $email_bd = $user["email"];
+
+        //     if (strcmp($email, $email_bd) == 0) {
+        //         echo "Email ya usado, intenta con otro email";
+        //         break;
+        //     }
+        // }
 
 
         echo "<pre>";
@@ -87,7 +93,7 @@
 
                             <?php
                             $roles = getRoles();
-                           
+
 
                             foreach ($roles as  $role) {
                                 $id = $role["id"];

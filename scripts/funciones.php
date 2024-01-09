@@ -32,4 +32,27 @@ require_once "conexion.php";
          echo $ex->getMessage();
      }
  }
+
+ function exist_user_email($email){
+
+    try {
+        $conn = getConnection();
+        $query = "SELECT * from usuario WHERE email=:email";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam("email", $email);
+        $stmt->execute();
+
+        $rows_affected = $stmt->rowCount();
+
+        return $rows_affected >= 1;
+
+
+
+    } catch (PDOException $ex) {
+        echo "error: " . $ex->getMessage();
+    }
+
+ }
+
+
 ?>
